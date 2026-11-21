@@ -24,7 +24,7 @@ table{width:100%;border-collapse:collapse;font-size:13px;min-width:430px}th,td{t
 <div class="actions"><button class="secondary" id="add" type="button">＋ Өрөө нэмэх</button><button class="primary" id="calc" type="button">Тооцоолох</button></div></section>
 <section class="card"><h2 class="st">3. Таны халаалтын тооцоо</h2><div class="result"><div class="rl">Хямдарсан нийт үнэ</div><div class="big" id="total-price">— ₮</div><div class="rl">Үндсэн үнэ: <span id="total-base">— ₮</span></div><div class="savings">Таны хэмнэлт: <strong id="total-saving">— ₮</strong></div><div class="metrics"><div class="metric"><span>Нийт суурилах чадал</span><strong id="total-power">— кВт</strong></div><div class="metric monthly-metric"><span>⚡ Сарын цахилгааны зардал</span><strong id="monthly">— ₮</strong><small>Жишиг тооцоолол</small></div><div class="metric"><span>Нийт халаагуурын тоо</span><strong id="unit-count">— ш</strong></div><div class="metric"><span>Үнэгүй цагийн тохируулга</span><strong id="timer-count">— ш</strong></div></div><div id="details" style="margin-top:12px"></div></div>
 <div class="tablewrap"><table><thead><tr><th>Загвар</th><th class="num">Талбай</th><th class="num">Чадал</th><th class="num">Үндсэн үнэ</th><th class="num">Хямдарсан үнэ</th></tr></thead><tbody>
-<tr><td>1 хавтант</td><td class="num">8–10 м²</td><td class="num">0.5 кВт</td><td class="num"><span class="price-old">315,000 ₮</span></td><td class="num"><span class="price-new">215,000 ₮</span></td></tr>
+<tr><td>1 хавтант</td><td class="num">4–10 м²</td><td class="num">0.5 кВт</td><td class="num"><span class="price-old">315,000 ₮</span></td><td class="num"><span class="price-new">215,000 ₮</span></td></tr>
 <tr><td>2 хавтант</td><td class="num">10–18 м²</td><td class="num">1.0 кВт</td><td class="num"><span class="price-old">395,000 ₮</span></td><td class="num"><span class="price-new">295,000 ₮</span></td></tr>
 <tr><td>3 хавтант</td><td class="num">18–25 м²</td><td class="num">1.5 кВт</td><td class="num"><span class="price-old">495,000 ₮</span></td><td class="num"><span class="price-new">395,000 ₮</span></td></tr>
 <tr><td>4 хавтант</td><td class="num">25–30 м²</td><td class="num">2.0 кВт</td><td class="num"><span class="price-old">595,000 ₮</span></td><td class="num"><span class="price-new">495,000 ₮</span></td></tr>
@@ -62,7 +62,7 @@ table{width:100%;border-collapse:collapse;font-size:13px;min-width:430px}th,td{t
 <script>
 const $=id=>document.getElementById(id),fmt=n=>new Intl.NumberFormat('mn-MN',{maximumFractionDigits:1}).format(n),money=n=>new Intl.NumberFormat('mn-MN',{maximumFractionDigits:0}).format(Math.round(n))+' ₮';
 const models=[
- {name:'1 хавтант загвар',min:8,max:10,power:.5,price:215000,basePrice:315000,panels:1},
+ {name:'1 хавтант загвар',min:4,max:10,power:.5,price:215000,basePrice:315000,panels:1},
  {name:'2 хавтант загвар',min:10,max:18,power:1,price:295000,basePrice:395000,panels:2},
  {name:'3 хавтант загвар',min:18,max:25,power:1.5,price:395000,basePrice:495000,panels:3},
  {name:'4 хавтант загвар',min:25,max:30,power:2,price:495000,basePrice:595000,panels:4}
@@ -74,7 +74,7 @@ function choose(area){
  const qty=area<=25?1:Math.ceil(area/25);
  const each=area/qty;
  let model=null;
- if(each>=8&&each<=10)model=models[0];
+ if(each>=4&&each<=10)model=models[0];
  else if(each>10&&each<=18)model=models[1];
  else if(each>18&&each<=25)model=models[2];
  else if(each>25&&each<=30)model=models[3];
@@ -92,7 +92,7 @@ function calculate(){
   const raw=r.querySelector('.room-area').value;if(raw==='')return;
   const area=Number(raw);if(!(area>0))return;
   const picked=choose(area);
-  if(!picked){details.push(`<div class="detail"><b>Өрөө ${i+1} — ${fmt(area)} м²</b><small class="warn">${area<8?'8 м²-аас бага':'Тооцооллын боломжит хүрээнээс гадуур'}: өгсөн загварын хүрээнд тохирох бүтээгдэхүүн тодорхойгүй.</small></div>`);return}
+  if(!picked){details.push(`<div class="detail"><b>Өрөө ${i+1} — ${fmt(area)} м²</b><small class="warn">${area<4?'4 м²-аас бага':'Тооцооллын боломжит хүрээнээс гадуур'}: өгсөн загварын хүрээнд тохирох бүтээгдэхүүн тодорхойгүй.</small></div>`);return}
   const {model,qty,each}=picked;
   const price=model.price*qty,base=model.basePrice*qty,power=model.power*qty,monthly=power*70000;
   totalPrice+=price;totalBase+=base;totalPower+=power;totalMonthly+=monthly;totalUnits+=qty;validRooms++;
