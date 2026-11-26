@@ -277,7 +277,7 @@ function calculate(){
   if(!picked){details.push(`<div class="detail"><b>Өрөө ${i+1} — ${fmt(area)} м²</b><small class="warn">${area<4?'4 м²-аас бага':'Тооцооллын боломжит хүрээнээс гадуур'}: өгсөн загварын хүрээнд тохирох бүтээгдэхүүн тодорхойгүй.</small></div>`);return}
   const {model,qty,each}=picked;
   const price=model.price*qty,base=model.basePrice*qty,power=model.power*qty;
-  totalPrice+=price;totalBase+=base;totalPower+=power;totalUnits+=qty;validRooms++;
+  totalPrice+=price;totalBase+=base;totalPower+=power;totalUnits+=qty;
   details.push(`<div class="detail"><b>Өрөө ${i+1} — ${fmt(area)} м²</b><small>${model.name} × ${qty} ширхэг · Үндсэн үнэ ${money(base)} · Хямдарсан үнэ ${money(price)}<br>Хэмнэлт ${money(base-price)} · Үйлдвэрийн баталгаа 3 жил · Бэлгийн цагийн тохируулга ${qty} ш · Нийт чадал ${fmt(power)} кВт${qty>1?`<br>Нэг халаагуурт ногдох талбай ойролцоогоор ${fmt(each)} м²`:''}</small></div>`);
  });
  $('total-price').textContent=money(totalPrice);$('total-base').textContent=money(totalBase);$('total-saving').textContent=money(totalBase-totalPrice);$('total-power').textContent=fmt(totalPower)+' кВт';$('unit-count').textContent=totalUnits+' ш';$('timer-count').textContent=totalUnits+' ш';
